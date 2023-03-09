@@ -50,18 +50,18 @@ NAME | Representative
 
 # 🏕 4. 시스템 구성/개발도구
 
-###  시스템 구성
-<img width="1743" alt="Camping Mall" src="https://user-images.githubusercontent.com/117332903/218227062-2f92280a-312b-4d4d-b7ba-4dd7c381bc2c.png">
+### 시스템 구성도
+
+![시스템구성도](https://user-images.githubusercontent.com/117332869/224156499-5c5ad166-50f8-4686-81ea-cb2bac3cbdf0.png)
 
 <br>
 
-<div align="center">
+### 개발도구
 
 | IDE | Back | Front | DB | FrameWork | API | Etc - Tools | Server |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | Eclipse<br> IntelliJ<br> VSCode | Java JDK 11 | HTML<br> JavaScript<br> Jquery<br> Ajax | MySQL<br> v8.0.31 | SpringBoot<br> ThymeLeaf<br>Mybatis | Weather API<br> Kakao API<br> Import API<br> Naver ChatBot | GitHub<br> WorkBanch<br> Gather Town<br> Coggle<br> Figma<br> ERDCloud<br> CloudCraft<br> Google Sheet |	NCP(Naver Cloud Platform) |
 
-</div>
 
 <br><br><br>
 
