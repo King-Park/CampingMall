@@ -17,6 +17,9 @@
 - 교육받은 내용을 바탕으로 팀원 모두 프론트/백을 설계, 개발하며 프로세스 이해도 향상
 - 네이버 클라우드 플랫폼(NCP)을 사용한 배포를 통해 도메인, 서버에 대한 이해도 향상 및 서버 운영, 유지 보수 경험 축적
 - 아임포트, kakao, naver, google 등의 다양한 API(예약/결제 및 소셜 로그인, 카카오맵, 날씨 기능, 챗봇 등)사용 경험 축적
+- 유저(이용 고객)와 관리자(캠핑장 업체) 페이지를 별도로 두어 보안을 강화한 캠핑장 종합 예약 웹 서비스가 되도록 기획
+- 다양한 API 활용과 반응형 웹, 직관적인 UI로 사용자 편의 제공
+- 캠핑장 업체 관리자의 넓은 웹 컨텐츠 수정 권한 제공
 <br><br><br>
 
 
@@ -93,6 +96,8 @@ NAME | Representative
 <img src="https://user-images.githubusercontent.com/117332869/226212606-d163e479-1046-4cdd-b0e3-7eb477596261.gif" width="650">
 <img src="https://user-images.githubusercontent.com/117332869/226212616-c9387459-d78d-49db-a916-d5b32c1cd663.PNG" width="650">
 <img src="https://user-images.githubusercontent.com/117332869/226212619-2d6ef5a3-f0cc-46eb-83d9-20361d92f670.PNG" width="650">
+<img src="https://user-images.githubusercontent.com/117332869/226215059-58201daf-f596-4c34-8236-a39c7a30e30e.PNG" width="650">
+
 <br>
 <br>
 <br>
@@ -121,8 +126,8 @@ NAME | Representative
 ![달력클릭](https://user-images.githubusercontent.com/117332903/218662949-bda7ae32-500f-4cf1-8e58-69242d989b79.gif)
 - 캠핑할 일자를 선 선택 후 그 일자에 예약되지 않은 사이트(자리)를 선택하는 과정
 - JavaScript의 cell을 이용하여 달력 구현/함수 로직으로 선택된 일자를 표시
-- DB에서 관리자가 설정한 휴무일을 제외한 일자만 선택 활성화
-- 선택한 일자 중 예약완료 사이트를 제외한 사이트만 선택 활성화
+- DB에서 관리자가 설정한 휴무일을 제외한 일자에서만 사이트(자리)선택 활성화
+- 선택한 일자 중 예약완료 사이트를 제외한 사이트(자리)만 선택 활성화
 - 기상청 날씨 API를 통해 해당 캠핑장 업체 지역의 날씨정보를 제공하여 예약 시 편의성 제공
 <br><br>
 
@@ -130,6 +135,7 @@ NAME | Representative
 ![결제](https://user-images.githubusercontent.com/117332903/218663003-53309dde-5ce3-4ee1-b263-cd3f45ec21ab.gif)
 - import API를 이용해 결제 요청 후 결제 정보를 DB에 저장
 - 검증단계에서 import restAPI를 통해 검증과 webhook서비스를 이용한 결제정보 동기화작업을 수행
+- 결제 완료 후 예약/환불 정보를 마이페이지에서 확인 가능
 <br><br><br>
 
 
@@ -174,8 +180,7 @@ NAME | Representative
 
 - USER 페이지의 캠핑장 선택/메인 화면에서 제공되는 업체 정보를 직접 수정할 수 있음
 - 관리자가 지정한 캠핑장의 위도/경도에 따라 USER페이지의 지도 및 날씨가 반영됨
-<br>
-<br>
+<br><br>
 
 ### c-2. 공지 글 관리
 
@@ -185,8 +190,7 @@ NAME | Representative
 - 홈페이지 메인과 공지사항 탭에 제공되는 공지사항 작성 기능
 - 작성/수정시 주요공지로 올리면 메인에 노출+공지사항 게시판 상단에 위치시켜 공지를 강조할 수 있음
 - JavaScript로 글자수를 확인하며 작성 가능
-
-<br><br><br>
+<br><br>
 
 ### c-3. 구역-사이트(자리) 관리
 
@@ -235,30 +239,40 @@ NAME | Representative
 
 <br><br><br>
 
-## g. API
-### g-1. 카카오 Login
-- 카카오 로그인
-- 탈퇴시 카카오와 연결도 끊고 DB에서도 데이터 삭제
-- 일반 회원가입과 같은 시스템으로 DB에서 데이터 삭제 
+---
+<br>
+
+## [ API ]
+
+- 홈페이지 개발에 활용한 API 기능들
+
+## a. 카카오 Login
 
 ![카카오](https://user-images.githubusercontent.com/117332903/218676346-55c65cb9-8312-44b4-b5a8-1e7b1590fa79.gif)
+
+- 카카오에서 제공하는 sns 정보로 가입/로그인하는 기능
+- 탈퇴시 DB에서 일반 회원가입과 같은 시스템으로 DB에서 데이터가 삭제되며 카카오와의 연결도 끊어짐
 <br><br><br>
 
-### g-2. 날씨, 카카오 Map
-- 위도, 경도를 수정하여 지도에 표시
-- 날씨의 경우 기상청에서 요구하는 x좌표, y좌표로 변환하여 사용
+## b. 기상청 날씨, 카카오 Map
 
 ![좌표수정](https://user-images.githubusercontent.com/117332903/218662484-7c76086b-9a62-4ac4-b4c9-49f7c49ee9a4.gif)
+
+- 수정된 위도, 경도가 USER페이지의 지도 및 날씨에 반영됨
+- 날씨API의 경우 입력한 위도/경도가 기상청 API가 요구하는 x좌표/y좌표로 변환되어 이용됨
 <br><br><br>
 
-### g-3. Naver 쳇봇
-- NCP의 쳇봇을 이용한 구현
+## c. NCP 챗봇
 
 <img src="https://user-images.githubusercontent.com/117332903/218676813-58f0a4e3-6d83-4951-a70b-3795e5182227.gif" width="310px">
 
+- 챗봇을 통한 문의 기능
+- NCP(네이버 클라우드 플랫폼)의 AI 챗봇서비스를 이용하여 구현
+- 답변할 수 없는 질문의 경우 유선전화로 안내
+
 <br><br><br>
 
-# 7. 트러블 슈팅🧨
+# 🧨 7. 트러블 슈팅
 1. BootStrap 사용시 하위맵핑에서 js파일 실행안되는 현상 발생 (ex. localhost/user/register) - 해결
 > Thymeleaf 사용시 src를 th:src로 변경하여 해결<br>
 <br>
@@ -322,3 +336,7 @@ NAME | Representative
 13. Local에서는 작동하나 배포 후 siteedit맵핑에 에러발생(500) - 해결
 > 코드에 불필요한 코드 삭제 후 DB에서 맵핑으로 인한 대소문자 구분해준 후 해결<br>
 <br>
+<br>
+<br>
+
+end
