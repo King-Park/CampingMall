@@ -85,103 +85,158 @@ NAME | Representative
 <br><br><br>
 
 # 🏕 6. 웹 서비스 구현 화면
-## 캠핑장 선택 및 세션이 만료됐을 경우
-- 여러 캠핑장을 등록 후 사용 할 수 있도록 구현
-- DB에서 데이터를 불러와서 세션으로 구분
-- 세션 만료시 캠핑장 선택페이지로 이동해 사용자가 에러페이지를 보는 것을 방지
+## [ USER 페이지 ]
+- 시작 페이지에서 인삿말, 업체 메인 이미지 슬라이드, 각 메뉴 탭의 요약 정보가 제공되며 read more/메뉴의 각 탭 클릭시 상세 정보를 이용할 수 있도록 구성
+<br>
+<img src="https://user-images.githubusercontent.com/117332869/226212469-8eabb2ae-39c0-4167-a521-1850a087c17c.gif" width="650">
+<img src="https://user-images.githubusercontent.com/117332869/226212599-b4710d25-eca4-446b-9d48-b17b33aaec02.PNG" width="650">
+<img src="https://user-images.githubusercontent.com/117332869/226212606-d163e479-1046-4cdd-b0e3-7eb477596261.gif" width="650">
+<img src="https://user-images.githubusercontent.com/117332869/226212616-c9387459-d78d-49db-a916-d5b32c1cd663.PNG" width="650">
+<img src="https://user-images.githubusercontent.com/117332869/226212619-2d6ef5a3-f0cc-46eb-83d9-20361d92f670.PNG" width="650">
+<br>
+<br>
+<br>
 
+## a. 캠핑장 업체 선택 / 오류 페이지
 ![캠핑장선택,에러](https://user-images.githubusercontent.com/117332903/218694227-71c871e4-3b50-4101-b2e3-a055b1e03e06.gif)
-
+- 여러 캠핑장을 종합한 예약 웹 사이트이므로 첫 페이지에서 캠핑장을 선택하도록 구성
+- 세션으로 캠핑장 업체를 구분하며 세션에 따라 DB에서 업체별 데이터를 불러옴
+- 잘못된 주소 및 세션 만료시 에러 페이지 대신 캠핑장 선택페이지로 이동, 사용자가 에러 페이지를 보는 것을 방지함
 <br><br><br>
 
-## 반응형
-- 반응형 웹으로 만들어 모바일 환경에서도 사용이 가능하게 구현
-
-![반응](https://user-images.githubusercontent.com/117332903/218700164-2800e2f8-9370-4b4b-87ec-2abe7cb90ea5.gif)
-<br><br><br>
-
-
-## 회원가입 및 탈퇴
+## b. 회원가입 / 탈퇴
+![회원가입](https://user-images.githubusercontent.com/117332903/218677920-775f388e-deb6-421e-a031-c0b114fe7b64.gif)
 - 회원가입시 각 input마다 정규식을 사용해 유효성검사를 시행
 - 비밀번호는 AES512 단방향 암호화 방식을 채택하여 DB에 저장
-- 탈퇴시 DB에 있는 데이터 ID앞에 구분자를 삽입 후 나머지 정보는 삭제
-- ID는 통계페이지에서 예약 데이터를 이용하기 위해 남겨둠
-
-![회원가입](https://user-images.githubusercontent.com/117332903/218677920-775f388e-deb6-421e-a031-c0b114fe7b64.gif)
+<br><br><br>
 
 ![회원탈퇴](https://user-images.githubusercontent.com/117332903/218682110-bc409d95-eb5e-44cf-ada5-7b2565153402.gif)
-
+- 로그인 후 마이페이지에서 탈퇴 가능
+- 탈퇴 시 DB에 있는 데이터 ID앞에 구분자가 삽입되며 ID 외 나머지 개인정보는 삭제 처리
+- ID는 통계 및 환불 등의 데이터 사용을 위해 탈퇴 처리만 구분하고 보존됨
 <br><br><br>
 
-## 예약과정
-### 1. 사이트 선택
-- JavaScript의 cell을 이용하여 달력 구현
-- 함수 로직을 작성하여 체크된 날짜를 표시
-- DB에서 휴일로 설정된 날과 예약이 완료된 사이트를 제외하고 데이터를 불러옴
-- 기상청 날씨 API를 사용하여 최근 날씨들을 보여주어 예약의 편의성 제공
-
+## c. 예약하기
+### c-1. 캠핑 일정-사이트 선택
 ![달력클릭](https://user-images.githubusercontent.com/117332903/218662949-bda7ae32-500f-4cf1-8e58-69242d989b79.gif)
-<br><br><br>
+- 캠핑할 일자를 선 선택 후 그 일자에 예약되지 않은 사이트(자리)를 선택하는 과정
+- JavaScript의 cell을 이용하여 달력 구현/함수 로직으로 선택된 일자를 표시
+- DB에서 관리자가 설정한 휴무일을 제외한 일자만 선택 활성화
+- 선택한 일자 중 예약완료 사이트를 제외한 사이트만 선택 활성화
+- 기상청 날씨 API를 통해 해당 캠핑장 업체 지역의 날씨정보를 제공하여 예약 시 편의성 제공
+<br><br>
 
-### 2. 결제
-- 예약완료를 위한 결제기능
+### c-2. 결제
+![결제](https://user-images.githubusercontent.com/117332903/218663003-53309dde-5ce3-4ee1-b263-cd3f45ec21ab.gif)
 - import API를 이용해 결제 요청 후 결제 정보를 DB에 저장
 - 검증단계에서 import restAPI를 통해 검증과 webhook서비스를 이용한 결제정보 동기화작업을 수행
-
-![결제](https://user-images.githubusercontent.com/117332903/218663003-53309dde-5ce3-4ee1-b263-cd3f45ec21ab.gif)
 <br><br><br>
 
-## 리뷰시스템
-- 고객 후기 시스템
-- 로그인을 하지 않으면 작성할 수 없음
-- 예약을 완료하지 않으면 작성할 수 없음
-- 예약 후 체크인을 하지 않은 예약에 대해서는 작성할 수 없음
 
+## d. 리뷰시스템
 ![리뷰](https://user-images.githubusercontent.com/117332903/218890857-968dc169-d8d1-4caf-8ca1-10350483e854.gif)
+- 실 캠핑장 이용 고객의 한줄평과 별점 부여 기능
+- 해당 사이트(자리) 실제 이용자 이외에는 작성할 수 없음(비 로그인 및 이용 전 단순 예약상태에서는 작성불가)
+<br><br><br>
+
+## e. 반응형
+![반응](https://user-images.githubusercontent.com/117332903/218700164-2800e2f8-9370-4b4b-87ec-2abe7cb90ea5.gif)
+- 반응형 웹 형식으로 제작하여 태블릿/모바일 등의 환경에서도 사용이 용이하게 구현
+- 출력되는 페이지의 가로 사이즈에 따라 컨텐츠 정렬 및 폰트가 변화
 <br><br><br>
 
 ---
-<br><br>
-## 관리자 로그인
-- 각 관리자상호 별로 따로따로 각자의 홈페이지를 관리 할 수 있음
-- 유저페이지와 마찬가지로 세션이 만료되면 자동으로 로그인페이지로 이동
+<br>
 
+## [ ADMIN 페이지 ]
+
+- 업체 정보, 통계, 유저 관리 등이 가능한 캠핑장 업체 관리자용 페이지
+
+<br>
+
+## a. 관리자 로그인
 ![다른admin](https://user-images.githubusercontent.com/117332903/218661687-8e01e069-6f00-46ea-b027-0a6d88878d65.gif)
+- 각 업체별 관리 페이지가 존재하며, 업체가 직접 홈페이지 내용을 관리 할 수 있음
+- 잘못된 주소 및 세션 만료시 에러 페이지 대신 로그인 페이지로 이동
 <br><br><br>
 
-## 통계보기
-- 원하는 통계만 골라서 볼 수 있습니다.
-- 월별 통계, 년별 매출, 예약수, 방문객, 구역별 매출, 구역별 방문객을 조회할 수 있습니다.
-
+## b. 통계 및 요약
 ![통계보기](https://user-images.githubusercontent.com/117332903/218662168-3a821845-020a-4389-b1bf-5dfadae77d9d.gif)
+- 매출(월/년별), 예약 수, 방문객, 구역별 매출/방문객 통계를 선택하여 확인 가능
+- 최근 예약 정보 및 검색, 최근 리뷰/별점을 요약 확인 가능
 <br><br><br>
 
-## 휴일 추가
-- JavaScript의 cell을 이용하여 달력 구현
-- 함수 로직을 작성하여 체크된 날짜를 표시
-- 달력을 이용하여 해당 날짜에 예약을 못하도록 설정
+## c. 홈페이지 관리
+### c-1. 업체 정보 수정
 
-![휴일추가](https://user-images.githubusercontent.com/117332903/218662412-bc440727-d840-4a9a-81bc-1f95e87d78e6.gif)
+<img src="https://user-images.githubusercontent.com/117332869/226213175-c26913d1-4daa-431c-8d5f-ed2bf49e6c24.PNG" width="650">
+<img src="https://user-images.githubusercontent.com/117332869/226213176-2c04956d-d09a-457d-b78c-1dbf7abc2a2b.PNG" width="650">
+
+- USER 페이지의 캠핑장 선택/메인 화면에서 제공되는 업체 정보를 직접 수정할 수 있음
+- 관리자가 지정한 캠핑장의 위도/경도에 따라 USER페이지의 지도 및 날씨가 반영됨
+<br>
+<br>
+
+### c-2. 공지 글 관리
+
+<img src="https://user-images.githubusercontent.com/117332869/226213598-eaf178aa-696a-43a8-b42c-cedf9349bdcd.PNG" width="650">
+<img src="https://user-images.githubusercontent.com/117332869/226213601-775e4c46-62be-4460-9239-e832638f3bad.PNG" width="650">
+
+- 홈페이지 메인과 공지사항 탭에 제공되는 공지사항 작성 기능
+- 작성/수정시 주요공지로 올리면 메인에 노출+공지사항 게시판 상단에 위치시켜 공지를 강조할 수 있음
+- JavaScript로 글자수를 확인하며 작성 가능
+
 <br><br><br>
 
-## 게시글 변경(이미지 변경)
-- 해당 이미지파일이 admin프로젝트의 이미지 폴더로 저장
-- User프로젝트에서 외부 폴더 사용을 설정해주어 admin폴더의 이미지를 불러옴
-- 기존에 사용하던 파일은 삭제함
-- 사용중인 파일의 이름과 같은 파일일 경우 구분하기 위해 (숫자)로 구분을 해줌
+### c-3. 구역-사이트(자리) 관리
+
+<img src="https://user-images.githubusercontent.com/117332869/226213767-08016172-db84-4a96-b328-b63b7d7d9936.PNG" width="650">
+<img src="https://user-images.githubusercontent.com/117332869/226213770-2fbe0637-76bb-466a-92ac-89250a0801dd.PNG" width="650">
 
 ![이미지변경](https://user-images.githubusercontent.com/117332903/218695525-c05362f7-e7b2-4362-a655-a79e5dfbe34a.gif)
+
+- 구역과 구역 안의 사이트(자리)를 관리하는 기능
+- 설명과 이미지 관리 추가 및 수정이 가능
+- 이미지 수정 시 업로드한 파일은 ADMIN프로젝트의 이미지 폴더로 저장, 기존 이미지 파일은 삭제 처리됨
+- 사용중인 파일명과 중복된 파일명일 경우 파일명 뒤에 (숫자)가 추가되어 저장됨
+- USER페이지에서는 DB에 기록된 ADMIN프로젝트 이미지 폴더의 파일을 불러와서 USER화면에 출력하도록 개발
+
 <br><br><br>
 
-## 환불
-- 관리자는 유저가 요청하는 환불건들에 대해 리스트를 확인
-- 확인 후 승인 or 환불 거절을 선택 할 수 있음
+
+##  d. 휴무일 지정
+
+![휴일추가](https://user-images.githubusercontent.com/117332903/218662412-bc440727-d840-4a9a-81bc-1f95e87d78e6.gif)
+
+- 달력에서 휴무일을 지정하여 해당 일자는 예약 불가능하게 설정하는 기능
+- 관리자가 확인할 수 있는 휴무 사유 메모 가능
+- USER페이지와 마찬가지로 JavaScript의 cell을 이용하여 달력 구현/함수 로직으로 선택된 일자를 표시
+
+<br><br><br>
+
+##  e. 회원관리
+
+<img src="https://user-images.githubusercontent.com/117332869/226214400-9528b5f4-1fb1-4329-8009-d0c2ce5e4927.PNG" width="650">
+<img src="https://user-images.githubusercontent.com/117332869/226214402-f07851ed-005e-4986-8ad1-a5d37799bce3.PNG" width="650">
+
+- 현재 캠핑장을 사용한 사용자의 이름, 생년월일, 예약횟수, 연락처, 최근 예약일, 탈퇴여부를 확인하는 기능
+- 이름 클릭시 예약과 관련한 상세정보 확인 가능
+
+<br><br><br>
+
+
+## f. 환불 처리
 
 ![환불](https://user-images.githubusercontent.com/117332903/218693075-58da665b-4ee6-4398-9181-a8062725ba12.gif)
+
+- 유저가 요청한 환불 리스트를 확인 가능한 페이지
+- 관리자가 환불 승인/거절을 처리할 수 있음
+- 환불이 거절되었을 경우 유저는 환불 재요청 가능
+
 <br><br><br>
 
-## API
-### 1. 카카오 Login
+## g. API
+### g-1. 카카오 Login
 - 카카오 로그인
 - 탈퇴시 카카오와 연결도 끊고 DB에서도 데이터 삭제
 - 일반 회원가입과 같은 시스템으로 DB에서 데이터 삭제 
@@ -189,14 +244,14 @@ NAME | Representative
 ![카카오](https://user-images.githubusercontent.com/117332903/218676346-55c65cb9-8312-44b4-b5a8-1e7b1590fa79.gif)
 <br><br><br>
 
-### 2. 날씨, 카카오 Map
+### g-2. 날씨, 카카오 Map
 - 위도, 경도를 수정하여 지도에 표시
 - 날씨의 경우 기상청에서 요구하는 x좌표, y좌표로 변환하여 사용
 
 ![좌표수정](https://user-images.githubusercontent.com/117332903/218662484-7c76086b-9a62-4ac4-b4c9-49f7c49ee9a4.gif)
 <br><br><br>
 
-### 3. Naver 쳇봇
+### g-3. Naver 쳇봇
 - NCP의 쳇봇을 이용한 구현
 
 <img src="https://user-images.githubusercontent.com/117332903/218676813-58f0a4e3-6d83-4951-a70b-3795e5182227.gif" width="310px">
