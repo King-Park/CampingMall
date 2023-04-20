@@ -55,7 +55,7 @@ NAME | Representative
 
 ### 시스템 구성도
 
-![시스템구성도](https://user-images.githubusercontent.com/117332869/224156499-5c5ad166-50f8-4686-81ea-cb2bac3cbdf0.png)
+![시스템구성도](https://user-images.githubusercontent.com/117332869/233350467-951dc088-0841-4bb5-be48-338cf735d31a.png)
 
 <br>
 
